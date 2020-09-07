@@ -1,39 +1,22 @@
 import React, { useState } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import filter from 'lodash/filter';
 
+import {
+    removeDuplicateEntries,
+    cleanStudentsArray,
+    extractJoinedStudents
+} from './utils/processor';
 import Uploader from './components/Uploader';
-
-const handleOnError = (err: any) => {
-    console.log(err)
-}
-
-const handleOnRemoveFile = (data: any) => {
-    console.log(data);
-}
-
-const removeDuplicate = (array: any) => {
-    let check = new Set();
-    return array.filter((obj: any) => !check.has(obj[0]) && check.add(obj[0]));
-}
 
 function App() {
     const [joined, setJoined] = useState([]);
     const [left, setLeft] = useState([]);
+    const [norm, setNorm] = useState(false);
 
     function handleOnDrop(rawData: []) {
-        let students: any[] = [];
-        rawData.forEach((obj: { data: [] }) => {
-            const arr = obj.data;
-            students.push(arr);
-        });
-
-        const joinedStudentsRaw = filter(students, data => {
-            const [name, status, timestamp] = data;
-            return (status === 'Joined');
-        });
-
-        console.log(removeDuplicate(joinedStudentsRaw));
+        const students = cleanStudentsArray(rawData);
+        const joinedStudentsRaw = extractJoinedStudents(students);
+        const joinedStudents = removeDuplicateEntries(joinedStudentsRaw);
     }
 
     return (
