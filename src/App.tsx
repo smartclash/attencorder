@@ -7,6 +7,7 @@ import {
     extractStudents
 } from './utils/processor';
 import Uploader from './components/Uploader';
+import JoinedList from './components/JoinedList';
 
 function App() {
     const [joined, setJoined] = useState([]);
@@ -17,6 +18,9 @@ function App() {
         const students = cleanStudentsArray(rawData);
         const joinedStudentsRaw = extractStudents(students, 'Joined');
         const joinedStudents = removeDuplicateEntries(joinedStudentsRaw);
+
+        setNorm(() => true);
+        setJoined(() => joinedStudents);
     }
 
     return (
@@ -37,7 +41,7 @@ function App() {
 
                 <div className="row">
                     <div className="ten wide column">
-                        <Uploader handleOnDrop={handleOnDrop} />
+                        {norm ? <JoinedList students={joined} /> : <Uploader handleOnDrop={handleOnDrop} />}
                     </div>
                 </div>
             </div>
