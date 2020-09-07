@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import {
     removeDuplicateEntries,
     cleanStudentsArray,
-    extractJoinedStudents
+    extractStudents
 } from './utils/processor';
 import Uploader from './components/Uploader';
 
@@ -15,7 +15,7 @@ function App() {
 
     function handleOnDrop(rawData: []) {
         const students = cleanStudentsArray(rawData);
-        const joinedStudentsRaw = extractJoinedStudents(students);
+        const joinedStudentsRaw = extractStudents(students, 'Joined');
         const joinedStudents = removeDuplicateEntries(joinedStudentsRaw);
     }
 

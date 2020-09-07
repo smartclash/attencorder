@@ -15,9 +15,9 @@ export const cleanStudentsArray = (rawData: []): [] => {
   return students;
 };
 
-export const extractJoinedStudents = (students: []) => {
+export const extractStudents = (students: [], term: string) => {
   return filter(students, (data: [string, string, string]) => {
     const [, status] = data;
-    return status === "Joined";
+    return status === term;
   });
 };
